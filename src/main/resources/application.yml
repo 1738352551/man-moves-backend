@@ -1,0 +1,40 @@
+server:
+  port: 8989
+  servlet:
+    context-path: /man
+mybatis-plus:
+  # mp配置
+  type-aliases-package: cn.chenmanman.manmoviebackend.domain.entity
+  configuration:
+    map-underscore-to-camel-case: true # 下划线转驼峰
+spring:
+  # mysql数据源配置
+  datasource:
+    username: huanyuan
+    password: root
+    url: jdbc:mysql://localhost:3306/man_movie_db
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis配置
+  redis:
+    host: localhost:6379
+    database: 1
+logging:
+  config: classpath:log4j2.xml
+knife4j:
+  enable: true
+  openapi:
+    title: 慢慢视频站api文档
+    description: "慢慢视频站api文档"
+    email: 1738352551@qq.com
+    concat: 陈慢慢
+    url: https://docs.xiaominfo.com
+    version: v1.0
+    license: Apache 2.0
+    license-url: https://stackoverflow.com/
+    terms-of-service-url: https://stackoverflow.com/
+    group:
+      test1:
+        group-name: movie
+        api-rule: package
+        api-rule-resources:
+          - cn.chenmanman.manmoviebackend.controller
