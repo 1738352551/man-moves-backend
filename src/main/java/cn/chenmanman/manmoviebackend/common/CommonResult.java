@@ -1,9 +1,7 @@
 package cn.chenmanman.manmoviebackend.common;
 
 import cn.chenmanman.manmoviebackend.common.exception.ErrorEnum;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author 陈慢慢

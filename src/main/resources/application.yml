@@ -10,9 +10,9 @@ mybatis-plus:
 spring:
   # mysql数据源配置
   datasource:
-    username: huanyuan
-    password: root
-    url: jdbc:mysql://localhost:3306/man_movie_db
+    username: root
+    password: huanyuan
+    url: jdbc:mysql://localhost:3306/man_movie?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
   # redis配置
   redis:
@@ -38,3 +38,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - cn.chenmanman.manmoviebackend.controller
+alibaba:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  accessKeyId: LTAI5t6bDUa4e2URHapJZqwu
+  accessKeySecret: nS5Slht81qaK9riLFGD2SOd0Un2vpm
