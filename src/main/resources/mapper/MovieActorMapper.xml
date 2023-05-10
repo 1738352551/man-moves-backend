@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenmanman.manmoviebackend.mapper.MovieActorMapper">
+
+    <resultMap id="BaseResultMap" type="cn.chenmanman.manmoviebackend.domain.entity.MovieActorEntity">
+            <id property="movieId" column="movie_id" jdbcType="INTEGER"/>
+            <id property="actorId" column="actor_id" jdbcType="INTEGER"/>
+            <result property="posts" column="posts" jdbcType="INTEGER"/>
+            <result property="cosplayName" column="cosplay_name" jdbcType="VARCHAR"/>
+            <result property="cosplayPhoto" column="cosplay_photo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        movie_id,actor_id,posts,
+        cosplay_name,cosplay_photo
+    </sql>
+</mapper>
