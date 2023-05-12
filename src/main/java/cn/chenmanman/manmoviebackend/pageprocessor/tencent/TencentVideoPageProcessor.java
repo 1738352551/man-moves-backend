@@ -32,12 +32,17 @@ public class TencentVideoPageProcessor implements PageProcessor {
 
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
+    private final Map<String,Object> pageProcessorParams = new HashMap<>();
+
+
+    public void addPageProcessorParam(String paramName, Object paramValue) {
+        pageProcessorParams.put(paramName, paramValue);
+    }
 
 
     @Override
     public void process(Page page) {
-
-
+        String channelId = (String) pageProcessorParams.get("channelId");
         List<String> cids = new ArrayList<>();
         if (page.getUrl().regex("https://pbaccess.video.qq.com/trpc.vector_layout.page_view.PageService/getPage?(.*?)").match()) { // 如果有下一页
             String isHasNextPage = page.getJson().jsonPath("$.data.has_next_page").toString();
@@ -48,7 +53,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
             if (isHasNextPage.equals("true")) {
                 Request request = new Request("https://pbaccess.video.qq.com/trpc.vector_layout.page_view.PageService/getPage?video_appid=3000010");
                 request.setMethod(HttpConstant.Method.POST);
-                request.setRequestBody(HttpRequestBody.json("{\"page_context\":{\"page_index\":\""+(currentPage)+"\"},\"page_params\":{\"page_id\":\"channel_list_second_page\",\"page_type\":\"operation\",\"channel_id\":\"100113\",\"filter_params\":\"ifeature=2&iarea=-1&iyear=-1&ipay=-1&sort=75\",\"page\":\"0\"},\"page_bypass_params\":{\"params\":{\"page_id\":\"channel_list_second_page\",\"page_type\":\"operation\",\"channel_id\":\"100113\",\"filter_params\":\"ifeature=2&iarea=-1&iyear=-1&ipay=-1&sort=75\",\"page\":\"0\",\"caller_id\":\"3000010\",\"platform_id\":\"2\",\"data_mode\":\"default\",\"user_mode\":\"default\"},\"scene\":\"operation\",\"abtest_bypass_id\":\"0059c37da148261e\"}}", "utf-8"));
+                request.setRequestBody(HttpRequestBody.json("{\"page_context\":{\"page_index\":\""+(currentPage)+"\"},\"page_params\":{\"page_id\":\"channel_list_second_page\",\"page_type\":\"operation\",\"channel_id\":\""+channelId+"\",\"filter_params\":\"ifeature=2&iarea=-1&iyear=-1&ipay=-1&sort=75\",\"page\":\"0\"},\"page_bypass_params\":{\"params\":{\"page_id\":\"channel_list_second_page\",\"page_type\":\"operation\",\"channel_id\":\""+channelId+"\",\"filter_params\":\"ifeature=2&iarea=-1&iyear=-1&ipay=-1&sort=75\",\"page\":\"0\",\"caller_id\":\"3000010\",\"platform_id\":\"2\",\"data_mode\":\"default\",\"user_mode\":\"default\"},\"scene\":\"operation\",\"abtest_bypass_id\":\"0059c37da148261e\"}}", "utf-8"));
                 page.addTargetRequest(request);
                 log.debug("当前爬取页面 - {} - {}", currentPage, isHasNextPage);
             }
@@ -56,10 +61,6 @@ public class TencentVideoPageProcessor implements PageProcessor {
 
 
         log.debug("爬到 {}", page.getResultItems());
-
-
-
-
 
     }
 
