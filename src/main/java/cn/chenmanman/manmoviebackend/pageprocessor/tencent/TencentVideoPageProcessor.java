@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +34,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
 
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
-    private final Map<String,Object> pageProcessorParams = new HashMap<>();
+    private final ConcurrentMap<String,Object> pageProcessorParams = new ConcurrentHashMap<>();
 
 
     public void addPageProcessorParam(String paramName, Object paramValue) {
@@ -64,7 +66,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
 
     }
 
-    private List<String> getTencentVideoList(Page page, Integer currentPage) {
+    private void getTencentVideoList(Page page, Integer currentPage) {
         List<String> videoList = null;
         if (currentPage > 1) {
             videoList = page.getJson().jsonPath("$.data.CardList[0].children_list.list.cards.*").all();
@@ -100,7 +102,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
             movieInfoList.add(map);
         }
         page.putField("movie_info", movieInfoList);
-        return videoList.stream().map(s -> new Json(s).jsonPath("$.params.cid").toString()).collect(Collectors.toList());
+        videoList.stream().map(s -> new Json(s).jsonPath("$.params.cid").toString()).collect(Collectors.toList());
     }
 
     private List<Map<String, Object>> saveTencentVideoInfo(String json, Page page) {
