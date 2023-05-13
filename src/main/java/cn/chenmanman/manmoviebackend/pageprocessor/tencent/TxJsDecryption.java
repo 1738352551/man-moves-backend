@@ -24,8 +24,8 @@ public class TxJsDecryption {
 
     static {
         try {
-            cKeyEngine.eval(new FileReader("src/main/resources/js/tx/cKey.js"));
-            vstkEngine.eval(new FileReader("src/main/resources/js/tx/g_vstk.js"));
+            cKeyEngine.eval(new FileReader("src/main/resources/js/tencent/cKey.js"));
+            vstkEngine.eval(new FileReader("src/main/resources/js/tencent/g_vstk.js"));
         } catch (Exception e) {
             log.error("腾讯加密算法初始化失败");
         }

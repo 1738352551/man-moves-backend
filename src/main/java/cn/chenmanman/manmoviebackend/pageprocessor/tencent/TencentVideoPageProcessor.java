@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.pageprocessor
  * @className TencentVideoPageProcessor
- * @description 腾讯视频爬虫， todo 代码整理、改为电影电视剧通用
+ * @description 腾讯视频爬虫
  * @date 2023/5/5 22:14
  */
 @Slf4j
@@ -45,7 +45,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
     @Override
     public void process(Page page) {
         String channelId = (String) pageProcessorParams.get("channelId");
-        List<String> cids = new ArrayList<>();
+        page.putField("channelId", channelId);
         if (page.getUrl().regex("https://pbaccess.video.qq.com/trpc.vector_layout.page_view.PageService/getPage?(.*?)").match()) { // 如果有下一页
             String isHasNextPage = page.getJson().jsonPath("$.data.has_next_page").toString();
             Integer currentPage = Integer.parseInt(page.getJson().jsonPath("$.data.page_context.page_index").toString());
