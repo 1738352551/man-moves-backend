@@ -40,5 +40,5 @@ knife4j:
           - cn.chenmanman.manmoviebackend.controller
 alibaba:
   endpoint: oss-cn-beijing.aliyuncs.com
-  accessKeyId: LTAI5t6bDUa4e2URHapJZqwu
-  accessKeySecret: nS5Slht81qaK9riLFGD2SOd0Un2vpm
+  accessKeyId: ********
+  accessKeySecret: ********
