@@ -38,7 +38,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - cn.chenmanman.manmoviebackend.controller
-alibaba:
-  endpoint: oss-cn-beijing.aliyuncs.com
-  accessKeyId: ********
-  accessKeySecret: ********
+#alibaba:
+#  endpoint: oss-cn-beijing.aliyuncs.com
+#  accessKeyId: ********
+#  accessKeySecret: ********

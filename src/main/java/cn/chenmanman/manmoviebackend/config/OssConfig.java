@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @description 阿里巴巴oss对象存储
  * @date 2023/5/5 18:20
  */
-@Configuration
+//@Configuration
 public class OssConfig {
     // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
 
