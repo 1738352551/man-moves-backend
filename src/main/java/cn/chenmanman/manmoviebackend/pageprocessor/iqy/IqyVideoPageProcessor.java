@@ -86,14 +86,14 @@ public class IqyVideoPageProcessor implements PageProcessor {
         baseMovieInfo.put("desc", desc);
         baseMovieInfo.put("bannerUrl", bannerUrl);
         baseMovieInfo.put("entityId", entityId);
-        Map<String, Map> movieDetails = getMovieDetails(entityId);
+        Map<String, Object> movieDetails = getMovieDetails(entityId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("baseMovieInfo", baseMovieInfo);
         map.put("movieDetail", movieDetails);
         return map;
     }
 
-    private Map<String, Map> getMovieDetails(String entityId) {
+    private Map<String, Object> getMovieDetails(String entityId) {
         Map<String, String> iqySign = IqyJsDecryption.getIqySign(Long.parseLong(entityId));
         String timestamp = iqySign.get("timestamp");
         String sign = iqySign.get("sign");
@@ -111,7 +111,8 @@ public class IqyVideoPageProcessor implements PageProcessor {
                 // 如果是电视剧
                 Json json = new Json(body);
                 List<String> page_keys = json.jsonPath("$.data.template.pure_data.selector_bk[0].videos.page_keys[*]").all();
-                Map<String, Map> episodes= new HashMap<>();
+                List<Map<String, List>> episodeList1 = new ArrayList<>();
+                Map<String, Object> movieDetails = new HashMap<>();
                 for (String pageKey : page_keys) {
                     HashMap<String, List> episodesMap = new HashMap<>();
                     List<String> episodeJsons = json.jsonPath("$.data.template.pure_data.selector_bk[0].videos.feature_paged['"+pageKey+"'][*]").all();
@@ -129,9 +130,10 @@ public class IqyVideoPageProcessor implements PageProcessor {
                     }
                     // fixme
                     episodesMap.put(pageKey, episodeList);
-                    episodes.put("episodes", episodesMap);
+                    episodeList1.add(episodesMap);
+                    movieDetails.put("episodes", episodeList1);
                 }
-                return episodes;
+                return movieDetails;
             }
         }
         return null;
