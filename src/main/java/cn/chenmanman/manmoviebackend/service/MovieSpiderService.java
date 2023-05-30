@@ -8,7 +8,7 @@ import cn.chenmanman.manmoviebackend.domain.dto.movie.tencent.TencentMoviePullPo
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.service
  * @className MovieSpiderService
- * @description TODO
+ * @description 视频采集爬虫服务
  * @date 2023/5/29 12:42
  */
 public interface MovieSpiderService {

@@ -8,7 +8,7 @@ import lombok.Data;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.common
  * @className PageRequest
- * @description TODO
+ * @description 分页请求类
  * @date 2023/5/29 13:19
  */
 @Data

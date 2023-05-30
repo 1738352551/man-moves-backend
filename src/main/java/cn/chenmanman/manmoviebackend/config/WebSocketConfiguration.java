@@ -10,7 +10,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.config
  * @className WebSocketConfiguration
- * @description TODO
+ * @description websocket配置类
  * @date 2023/5/30 2:07
  */
 @Configuration

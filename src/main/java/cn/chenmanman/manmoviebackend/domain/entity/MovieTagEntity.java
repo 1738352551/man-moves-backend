@@ -9,7 +9,7 @@ import lombok.Data;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.entity
  * @className MovieTagEntity
- * @description TODO
+ * @description 影视与标签的中间表
  * @date 2023/5/31 0:06
  */
 @Data

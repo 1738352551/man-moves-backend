@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.video
  * @className VideoApiUpdateReqParam
- * @description TODO
+ * @description 视频解析接口修改请求类
  * @date 2023/5/29 13:08
  */
 @Data

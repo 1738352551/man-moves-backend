@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.video
  * @className VideoApiQueryRequest
- * @description TODO
+ * @description 视频解析接口查询请求类
  * @date 2023/5/29 13:20
  */
 @Data

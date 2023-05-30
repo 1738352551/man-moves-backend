@@ -25,7 +25,7 @@ import java.util.List;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.controller
  * @className VideoApiController
- * @description TODO
+ * @description 视频解析接口
  * @date 2023/5/29 12:53
  */
 

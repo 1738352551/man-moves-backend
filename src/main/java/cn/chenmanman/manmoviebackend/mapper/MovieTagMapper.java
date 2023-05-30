@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.mapper
  * @className MovieTagMapper
- * @description TODO
+ * @description 影视与标签的中间表
  * @date 2023/5/31 0:06
  */
 @Mapper

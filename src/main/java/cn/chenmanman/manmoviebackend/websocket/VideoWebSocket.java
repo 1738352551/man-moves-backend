@@ -19,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.websocket
  * @className VideoWebSocket
- * @description TODO
+ * @description 一起看视频websocket
  * @date 2023/5/30 2:07
  */
 @Component

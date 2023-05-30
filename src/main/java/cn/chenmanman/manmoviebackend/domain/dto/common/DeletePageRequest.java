@@ -10,7 +10,7 @@ import java.util.List;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.common
  * @className DeletePageRequest
- * @description TODO
+ * @description 通用删除请求类
  * @date 2023/5/30 0:29
  */
 @Data
