@@ -152,36 +152,6 @@ function g(t) {
 
 
 
-// app_version
-//     :
-//     "4.0.0"
-// auth_cookie
-//     :
-//     ""
-// device_id
-//     :
-//     "07d3c3aed6cb71b6622f2c7f7ea479fa"
-// entity_id
-//     :
-//     2827333801193900
-// sign
-//     :
-//     "CCA6BDFA5BE74D9637DFE691103326CD"
-// src
-//     :
-//     "pcw_tvg"
-// timestamp
-//     :
-//     1683966189381
-// user_id
-//     :
-//     ""
-// vip_status
-//     :
-//     0
-// vip_type
-//     :
-//     ""
 function N() {
     var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {}
         , e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}
@@ -199,22 +169,7 @@ function N() {
     return v.push("".concat(d, "=").concat(c)),
         g(v.join(r))
 }
-// "agentType=1012&businessType=14&entityId=2827333801193900&f_userId=0&m_device_id=07d3c3aed6cb71b6622f2c7f7ea479fa&timestamp=1683966976819&userId=0LdsifCI^$12*$6^.q(1"
-// "app_version=4.0.0&auth_cookie=&device_id=07d3c3aed6cb71b6622f2c7f7ea479fa&entity_id=2827333801193900&src=pcw_tvg&timestamp=1683967069717&user_id=&vip_status=0&vip_type=&secret_key=2827333801193900"
-// y = 2827333801193900;
-// O = {
-//     entity_id: y,
-//     timestamp: (new Date).getTime(),
-//     src: "pcw_tvg",
-//     vip_status: 0,
-//     vip_type:  "",
-//     auth_cookie: "",
-//     device_id: "07d3c3aed6cb71b6622f2c7f7ea479fa",
-//     user_id: "",
-//     app_version: '4.0.0'
-// }
-// j = N(O).toUpperCase()
-// O.sign = j
+
 
 
 function getMd5(entityId) {
@@ -222,6 +177,23 @@ function getMd5(entityId) {
         entity_id: entityId,
         timestamp: (new Date).getTime(),
         src: "pcw_tvg",
+        vip_status: 0,
+        vip_type:  "",
+        auth_cookie: "",
+        device_id: "07d3c3aed6cb71b6622f2c7f7ea479fa",
+        user_id: "",
+        app_version: '4.0.0'
+    }
+    j = N(O).toUpperCase()
+    return j + '|' + O.timestamp;
+}
+
+
+function getMd5One(albumId) {
+    O = {
+        album_id: albumId,
+        timestamp: (new Date).getTime(),
+        src: "pcw_album_detail",
         vip_status: 0,
         vip_type:  "",
         auth_cookie: "",

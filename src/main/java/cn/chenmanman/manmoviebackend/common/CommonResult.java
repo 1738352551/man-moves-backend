@@ -51,6 +51,10 @@ public class CommonResult<T> {
         return new CommonResult<>(ErrorEnum.SUCCESS.getCode(), message, data);
     }
 
+    public static  <T> CommonResult<T> success() {
+        return new CommonResult<>(ErrorEnum.SUCCESS.getCode(), "请求成功", null);
+    }
+
     public static  <T> CommonResult<T> success( T data) {
         return new CommonResult<>(ErrorEnum.SUCCESS.getCode(), ErrorEnum.SUCCESS.getMsg(), data);
     }

@@ -47,7 +47,7 @@ create table movie_info
     create_by    bigint       null comment '创建人',
     update_time  datetime     null comment '更新时间',
     update_by    bigint       null comment '更新人',
-    is_delete    tinyint      null comment '逻辑删除(0:未删除 1:删除)'
+    is_delete    tinyint default 0     null comment '逻辑删除(0:未删除 1:删除)'
 )
     collate = utf8mb4_0900_ai_ci;
 
@@ -59,3 +59,15 @@ create table tag
 )
     collate = utf8mb4_0900_ai_ci;
 
+drop table if exists video_api;
+create table video_api (
+    id   bigint          not null comment '主键Id'
+        primary key,
+    name varchar(255) not null comment '视频解析接口名字',
+    url  varchar(255) not null comment '视频解析接口地址',
+    create_time  datetime     null comment '创建时间',
+    create_by    bigint       null comment '创建人',
+    update_time  datetime     null comment '更新时间',
+    update_by    bigint       null comment '更新人',
+    is_delete    tinyint default 0      null comment '逻辑删除(0:未删除 1:删除)'
+) collate = utf8mb4_0900_ai_ci;
