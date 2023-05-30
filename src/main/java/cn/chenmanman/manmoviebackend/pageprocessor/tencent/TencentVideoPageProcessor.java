@@ -90,6 +90,7 @@ public class TencentVideoPageProcessor implements PageProcessor {
 
             // 请求视频分集接口
             Map<String, String> headers = new HashMap<String, String>();
+
             headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.68");
             headers.put("referer", "https://v.qq.com/");
             headers.put("cookie", TxCookies.getCookies());

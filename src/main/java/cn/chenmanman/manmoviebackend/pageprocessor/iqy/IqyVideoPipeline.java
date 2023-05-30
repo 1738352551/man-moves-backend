@@ -39,13 +39,13 @@ public class IqyVideoPipeline implements Pipeline {
     public void process(ResultItems resultItems, Task task) {
         log.debug("resultItems: {}", resultItems.toString());
         // 存储基本信息
-//        saveMovieInfo(resultItems);
+        Long currentId = saveMovieInfo(resultItems);
 
         // 存储剧集信息
-        saveEpisodes(resultItems);
+        saveEpisodes(resultItems, currentId);
     }
 
-    private void saveEpisodes(ResultItems resultItems) {
+    private void saveEpisodes(ResultItems resultItems, Long movieId) {
         List<Map> episodes = ((HashMap<String, List>) ((HashMap<String, Object>) resultItems.get("movieInfo")).get("movieDetail")).get("episodes");
 
         for (Map<String, List> episode:episodes) {
@@ -56,6 +56,7 @@ public class IqyVideoPipeline implements Pipeline {
                     // todo 需根据爱奇艺的一个唯一标识一个影视剧的标识, 在Movie_info中查到其Id设置到movieid。
                     EpisodesEntity episodesEntity = new EpisodesEntity();
                     episodesEntity.setTitle(title);
+                    episodesEntity.setMovieId(movieId);
                     episodesEntity.setMovieUrl(pageUrl);
                     episodesMapper.insert(episodesEntity);
                     log.debug("遍历到剧集: {}", currentEpisode);
@@ -64,18 +65,18 @@ public class IqyVideoPipeline implements Pipeline {
         }
     }
 
-    private void saveMovieInfo(ResultItems resultItems) {
+    private Long saveMovieInfo(ResultItems resultItems) {
         Map<String, String> baseMovieinfo = (HashMap<String,String>) ((HashMap<String,Object>) resultItems.get("movieInfo")).get("baseMovieInfo");
         String title = baseMovieinfo.get("title");
         String desc = baseMovieinfo.get("desc");
         // 检查该影视剧是否已存在
         MovieInfoEntity movieInfoEntity = movieInfoMapper.selectOne(new LambdaQueryWrapper<MovieInfoEntity>().eq(MovieInfoEntity::getName, title));
-        if (Objects.nonNull(movieInfoEntity)) return;
-
+        if (Objects.nonNull(movieInfoEntity)) return movieInfoEntity.getId();
         MovieInfoEntity baseMovieInfoEntity = new MovieInfoEntity();
         baseMovieInfoEntity.setName(title);
         baseMovieInfoEntity.setIntroduction(desc);
         baseMovieInfoEntity.setVideoSource("iqy"); // 视频采集于iqy
         movieInfoMapper.insert(baseMovieInfoEntity);
+        return baseMovieInfoEntity.getId();
     }
 }
