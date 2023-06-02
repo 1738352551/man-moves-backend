@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description 影视分集
  * @date 2023/5/30 0:36
  */
-@Api(tags="")
+@Api(tags="影视剧集相关接口")
 @RestController
 @RequestMapping
 @Slf4j
