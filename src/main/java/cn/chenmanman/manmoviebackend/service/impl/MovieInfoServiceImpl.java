@@ -120,10 +120,15 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
     @Override
     public void removeMovieInfo(List<Long> ids) {
         ids.forEach(movieId -> {
+            // 检查影视关联的剧集数量, 不能删除还有剧集的影视
+            List<EpisodesEntity> episodesEntityList = episodesMapper.selectList(new QueryWrapper<EpisodesEntity>().eq("movie_id", movieId));
+            if (episodesEntityList!= null && episodesEntityList.size() > 0) {
+                throw new BusinessException(String.format("影视还有剧集不能删除, 影视id: %d", movieId), 500L);
+            }
             // 1. 检查影视是否存在
             MovieInfoEntity movieInfoEntity = this.getBaseMapper().selectById(movieId);
             if (movieInfoEntity == null) {
-                throw new BusinessException(String.format("电影不存在, 电影id: %d", movieId), 500L);
+                throw new BusinessException(String.format("影视不存在, 影视id: %d", movieId), 500L);
             }
             // 2. 删除影视剧相关信息
             proxy.removeMovieInfo_ext(movieId);
