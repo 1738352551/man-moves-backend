@@ -1,6 +1,7 @@
-package cn.chenmanman.manmoviebackend.domain.dto.movie.tencent;
+package cn.chenmanman.manmoviebackend.domain.dto.spider.tencent;
 
-import io.swagger.annotations.Api;
+
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,10 +10,10 @@ import lombok.Data;
  * @author 陈慢慢
  * @version 1.0
  * @projectName man-moves-backend
- * @package cn.chenmanman.manmoviebackend.domain.dto.movie.tencent
+ * @package cn.chenmanman.manmoviebackend.domain.dto.spider.tencent
  * @className TencentMoviePullPostRequest
  * @description TODO
- * @date 2023/5/12 14:57
+ * @date 2023/6/2 16:49
  */
 @Data
 @ApiModel("腾讯视频抓取Post请求参数")

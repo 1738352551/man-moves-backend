@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,17 +16,18 @@ import lombok.EqualsAndHashCode;
  */
 @TableName(value ="movie_actor")
 @Data
+@ApiModel(value = "影视演员")
 public class MovieActorEntity implements Serializable {
     /**
      * 影视id
      */
 
-    private Integer movieId;
+    private Long movieId;
 
     /**
      * 演员id
      */
-    private Integer actorId;
+    private Long actorId;
 
     /**
      * 职位
@@ -37,7 +40,7 @@ public class MovieActorEntity implements Serializable {
     private String cosplayName;
 
     /**
-     * 
+     *
      */
     private String cosplayPhoto;
 

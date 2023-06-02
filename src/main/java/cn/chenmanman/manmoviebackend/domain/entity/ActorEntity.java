@@ -8,7 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 
+ *
  * @TableName actor
  */
 @TableName(value ="actor")
@@ -18,7 +18,7 @@ public class ActorEntity implements Serializable {
      * 主键id
      */
     @TableId
-    private Integer id;
+    private Long id;
 
     /**
      * 演员名
