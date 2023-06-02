@@ -1,6 +1,9 @@
 package cn.chenmanman.manmoviebackend.domain.dto.movie.episodes;
 
+import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * @author 陈慢慢
@@ -12,6 +15,13 @@ import lombok.Data;
  * @date 2023/6/2 23:10
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class EpisodesQueryRequest {
+@ToString(callSuper = true)
+public class EpisodesQueryRequest extends PageRequest {
+    private String title;
+
+    private String movieUrl;
+
+    private Long movieId;
 }
