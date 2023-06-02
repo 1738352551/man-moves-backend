@@ -1,10 +1,9 @@
-package cn.chenmanman.manmoviebackend.domain.dto.movie;
+package cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo;
 
 import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**

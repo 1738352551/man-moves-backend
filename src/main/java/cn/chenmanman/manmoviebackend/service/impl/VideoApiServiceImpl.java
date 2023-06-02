@@ -1,7 +1,7 @@
 package cn.chenmanman.manmoviebackend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.chenmanman.manmoviebackend.domain.entity.VideoApiEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity;
 import cn.chenmanman.manmoviebackend.service.VideoApiService;
 import cn.chenmanman.manmoviebackend.mapper.VideoApiMapper;
 import org.springframework.stereotype.Service;

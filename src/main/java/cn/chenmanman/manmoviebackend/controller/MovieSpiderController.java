@@ -1,8 +1,7 @@
 package cn.chenmanman.manmoviebackend.controller;
 
 import cn.chenmanman.manmoviebackend.common.CommonResult;
-import cn.chenmanman.manmoviebackend.domain.dto.spider.tencent.TencentMoviePullPostRequest;
-import cn.chenmanman.manmoviebackend.service.MovieInfoService;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.spider.tencent.TencentMoviePullPostRequest;
 import cn.chenmanman.manmoviebackend.service.MovieSpiderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,7 +1,7 @@
 package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
-import cn.chenmanman.manmoviebackend.domain.dto.spider.tencent.TencentMoviePullPostRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.spider.tencent.TencentMoviePullPostRequest;
 import cn.chenmanman.manmoviebackend.pageprocessor.tencent.TencentVideoPageProcessor;
 import cn.chenmanman.manmoviebackend.pageprocessor.tencent.TencentVideoPipeline;
 import cn.chenmanman.manmoviebackend.service.MovieSpiderService;

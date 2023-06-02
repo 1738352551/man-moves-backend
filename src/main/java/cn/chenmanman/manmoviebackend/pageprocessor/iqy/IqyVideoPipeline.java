@@ -1,7 +1,7 @@
 package cn.chenmanman.manmoviebackend.pageprocessor.iqy;
 
-import cn.chenmanman.manmoviebackend.domain.entity.EpisodesEntity;
-import cn.chenmanman.manmoviebackend.domain.entity.MovieInfoEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
 import cn.chenmanman.manmoviebackend.mapper.EpisodesMapper;
 import cn.chenmanman.manmoviebackend.mapper.MovieInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

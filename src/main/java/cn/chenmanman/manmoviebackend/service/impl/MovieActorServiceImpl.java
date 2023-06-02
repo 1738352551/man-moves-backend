@@ -2,7 +2,7 @@ package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.service.MovieActorService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.chenmanman.manmoviebackend.domain.entity.MovieActorEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieActorEntity;
 import cn.chenmanman.manmoviebackend.mapper.MovieActorMapper;
 import org.springframework.stereotype.Service;
 

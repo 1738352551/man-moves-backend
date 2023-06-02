@@ -1,5 +1,6 @@
-package cn.chenmanman.manmoviebackend.domain.entity;
+package cn.chenmanman.manmoviebackend.domain.entity.movie;
 
+import cn.chenmanman.manmoviebackend.domain.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

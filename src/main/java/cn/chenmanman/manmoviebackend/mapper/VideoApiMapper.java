@@ -1,13 +1,13 @@
 package cn.chenmanman.manmoviebackend.mapper;
 
-import cn.chenmanman.manmoviebackend.domain.entity.VideoApiEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
 * @author 17383
 * @description 针对表【video_api】的数据库操作Mapper
 * @createDate 2023-05-29 12:50:58
-* @Entity cn.chenmanman.manmoviebackend.domain.entity.VideoApiEntity
+* @Entity cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity
 */
 public interface VideoApiMapper extends BaseMapper<VideoApiEntity> {
 

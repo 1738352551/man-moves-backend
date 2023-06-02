@@ -3,10 +3,10 @@ package cn.chenmanman.manmoviebackend.controller;
 
 import cn.chenmanman.manmoviebackend.common.CommonResult;
 import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoQueryRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoUpdateRequest;
-import cn.chenmanman.manmoviebackend.domain.entity.MovieInfoEntity;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
 import cn.chenmanman.manmoviebackend.service.MovieInfoService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;

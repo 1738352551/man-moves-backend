@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.dto.spider.tencent;
+package cn.chenmanman.manmoviebackend.domain.dto.movie.spider.tencent;
 
 
 

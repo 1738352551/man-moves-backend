@@ -2,10 +2,10 @@ package cn.chenmanman.manmoviebackend.controller;
 
 import cn.chenmanman.manmoviebackend.common.CommonResult;
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
-import cn.chenmanman.manmoviebackend.domain.dto.video.VideoApiAddPostRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.video.VideoApiQueryRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.video.VideoApiUpdatePutRequest;
-import cn.chenmanman.manmoviebackend.domain.entity.VideoApiEntity;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiAddPostRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiUpdatePutRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity;
 import cn.chenmanman.manmoviebackend.service.VideoApiService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;

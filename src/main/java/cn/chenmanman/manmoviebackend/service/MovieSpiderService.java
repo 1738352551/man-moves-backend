@@ -1,6 +1,6 @@
 package cn.chenmanman.manmoviebackend.service;
 
-import cn.chenmanman.manmoviebackend.domain.dto.spider.tencent.TencentMoviePullPostRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.spider.tencent.TencentMoviePullPostRequest;
 
 /**
  * @author 陈慢慢

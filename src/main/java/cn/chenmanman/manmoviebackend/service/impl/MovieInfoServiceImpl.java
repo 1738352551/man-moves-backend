@@ -2,9 +2,10 @@ package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
 import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.*;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.*;
 import cn.chenmanman.manmoviebackend.domain.vo.movie.MovieInfoVO;
 import cn.chenmanman.manmoviebackend.mapper.*;
 import cn.chenmanman.manmoviebackend.service.MovieInfoService;

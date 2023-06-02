@@ -1,6 +1,6 @@
-package cn.chenmanman.manmoviebackend.domain.dto.movie;
+package cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo;
 
-import cn.chenmanman.manmoviebackend.domain.entity.MovieActorEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieActorEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,20 +13,13 @@ import java.util.List;
  * @version 1.0
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.movie
- * @className MovieInfoUpdateRequest
- * @description 影视/电视剧修改请求
+ * @className MovieInfoAddRequest
+ * @description 添加影视信息请求
  * @date 2023/5/30 0:32
  */
 @Data
-@ApiModel(description = "影视/电视修改请求")
-public class MovieInfoUpdateRequest {
-
-    /**
-     * 影视id
-     * */
-    @ApiModelProperty(value = "影视id", required = true)
-    private Long id;
-
+@ApiModel(value = "添加影视信息请求")
+public class MovieInfoAddRequest {
     /**
      * 影视名
      */
@@ -53,9 +46,21 @@ public class MovieInfoUpdateRequest {
     @ApiModelProperty(value = "影视类型", required = false)
     private Integer type;
 
-    @ApiModelProperty(value = "影视关联的演员", required = false)
-    private List<MovieActorEntity> actorList;
 
-    @ApiModelProperty(value = "影视关联的标签", required = false)
-    private List<Long> tagList;
+//    private Long actorId;
+//    private String cosplayName;
+//    private Integer posts;
+//    private String cosplayPhoto;
+
+    /**
+     * 演员表
+     * */
+    @ApiModelProperty(value = "演员表", required = false)
+    private List<MovieActorEntity> movieActor;
+
+    /**
+     * 影视标签
+     * */
+    @ApiModelProperty(value = "影视标签", required = false)
+    private List<Long> tagId;
 }

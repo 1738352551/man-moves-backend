@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.chenmanman.manmoviebackend.mapper.ActorMapper">
 
-    <resultMap id="BaseResultMap" type="cn.chenmanman.manmoviebackend.domain.entity.ActorEntity">
+    <resultMap id="BaseResultMap" type="cn.chenmanman.manmoviebackend.domain.entity.movie.ActorEntity">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="photoUrl" column="photo_url" jdbcType="VARCHAR"/>

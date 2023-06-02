@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.entity;
+package cn.chenmanman.manmoviebackend.domain.entity.movie;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

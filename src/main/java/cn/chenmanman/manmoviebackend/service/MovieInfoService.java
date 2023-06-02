@@ -1,10 +1,10 @@
 package cn.chenmanman.manmoviebackend.service;
 
 import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoUpdateRequest;
-import cn.chenmanman.manmoviebackend.domain.entity.EpisodesEntity;
-import cn.chenmanman.manmoviebackend.domain.entity.MovieInfoEntity;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.movie.MovieInfoVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;

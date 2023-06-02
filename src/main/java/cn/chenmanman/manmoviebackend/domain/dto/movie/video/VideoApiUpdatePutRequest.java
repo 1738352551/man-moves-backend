@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.dto.video;
+package cn.chenmanman.manmoviebackend.domain.dto.movie.video;
 
 import lombok.Data;
 

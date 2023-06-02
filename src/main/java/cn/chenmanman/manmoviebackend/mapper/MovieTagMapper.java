@@ -1,6 +1,6 @@
 package cn.chenmanman.manmoviebackend.mapper;
 
-import cn.chenmanman.manmoviebackend.domain.entity.MovieTagEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieTagEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

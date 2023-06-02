@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.entity;
+package cn.chenmanman.manmoviebackend.domain.entity.movie;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 
+ *
  * @TableName episodes
  */
 

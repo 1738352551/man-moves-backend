@@ -1,6 +1,6 @@
 package cn.chenmanman.manmoviebackend.service;
 
-import cn.chenmanman.manmoviebackend.domain.entity.VideoApiEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

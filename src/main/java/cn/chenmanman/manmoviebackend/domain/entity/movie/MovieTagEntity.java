@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.entity;
+package cn.chenmanman.manmoviebackend.domain.entity.movie;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
