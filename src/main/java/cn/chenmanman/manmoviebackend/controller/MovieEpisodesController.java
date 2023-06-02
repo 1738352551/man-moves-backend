@@ -81,7 +81,7 @@ public class MovieEpisodesController {
         long size = episodesQueryRequest.getPageSize();
         // 构造查询条件
         Page<EpisodesEntity> movieInfoPage = episodesService.page(new Page<>(current, size), episodesService.getQueryWrapper(episodesQueryRequest));
-        return CommonResult.success();
+        return CommonResult.success(movieInfoPage);
     }
 
     @ApiOperation("分配影视剧集给影视")

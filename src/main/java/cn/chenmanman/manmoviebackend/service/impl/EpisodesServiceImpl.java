@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.service.EpisodesService;
 import cn.chenmanman.manmoviebackend.mapper.EpisodesMapper;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +43,8 @@ public class EpisodesServiceImpl extends ServiceImpl<EpisodesMapper, EpisodesEnt
         Optional.ofNullable(episodesQueryRequest).orElseThrow(() -> new BusinessException("请求参数不能为空", 500L));
         return new LambdaQueryWrapper<EpisodesEntity>()
                 .eq(Objects.nonNull(episodesQueryRequest.getMovieId()), EpisodesEntity::getMovieId, episodesQueryRequest.getMovieId())
-                .like(Objects.nonNull(episodesQueryRequest.getTitle()), EpisodesEntity::getTitle, episodesQueryRequest.getTitle())
-                .like(Objects.nonNull(episodesQueryRequest.getMovieUrl()), EpisodesEntity::getMovieUrl, episodesQueryRequest.getMovieUrl());
+                .like(Strings.isNotBlank(episodesQueryRequest.getTitle()), EpisodesEntity::getTitle, episodesQueryRequest.getTitle())
+                .like(Strings.isNotBlank(episodesQueryRequest.getMovieUrl()), EpisodesEntity::getMovieUrl, episodesQueryRequest.getMovieUrl());
     }
 
     @Override
