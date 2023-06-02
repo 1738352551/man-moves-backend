@@ -2,6 +2,7 @@ package cn.chenmanman.manmoviebackend.service;
 
 import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.MovieInfoUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.MovieInfoEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.movie.MovieInfoVO;
@@ -39,4 +40,10 @@ public interface MovieInfoService extends IService<MovieInfoEntity> {
      * @return 影视剧集分页
      * */
     IPage<EpisodesEntity> getMovieInfoEpisodes(PageRequest pageRequest, Long movieId);
+
+    /**
+     * @description 修改影视信息
+     * @param movieInfoUpdateRequest 影视更新信息请求参数
+     * */
+    void updateMovieInfo(MovieInfoUpdateRequest movieInfoUpdateRequest);
 }

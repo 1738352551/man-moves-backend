@@ -48,6 +48,10 @@ public class MovieInfoController {
     @ApiOperation(value = "修改影视信息")
     @PostMapping("/update")
     public CommonResult<?> changeMovieInfo(@Validated @RequestBody MovieInfoUpdateRequest movieInfoUpdateRequest) {
+
+        movieInfoService.updateMovieInfo(movieInfoUpdateRequest);
+
+
         return CommonResult.success();
     }
 

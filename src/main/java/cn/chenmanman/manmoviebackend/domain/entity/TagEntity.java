@@ -18,7 +18,7 @@ public class TagEntity implements Serializable {
      * 主键Id
      */
     @TableId
-    private Integer id;
+    private Long id;
 
     /**
      * 标签名

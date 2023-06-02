@@ -1,10 +1,12 @@
 package cn.chenmanman.manmoviebackend.domain.dto.movie;
 
+import cn.chenmanman.manmoviebackend.domain.entity.MovieActorEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @author 陈慢慢
@@ -50,4 +52,10 @@ public class MovieInfoUpdateRequest {
      */
     @ApiModelProperty(value = "影视类型", required = false)
     private Integer type;
+
+    @ApiModelProperty(value = "影视关联的演员", required = false)
+    private List<MovieActorEntity> actorList;
+
+    @ApiModelProperty(value = "影视关联的标签", required = false)
+    private List<Long> tagList;
 }
