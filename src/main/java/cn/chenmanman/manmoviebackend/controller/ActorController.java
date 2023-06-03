@@ -1,5 +1,6 @@
 package cn.chenmanman.manmoviebackend.controller;
 
+import cn.chenmanman.manmoviebackend.aop.Limit;
 import cn.chenmanman.manmoviebackend.common.CommonResult;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.actor.ActorAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.actor.ActorQueryRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 陈慢慢
@@ -57,6 +59,8 @@ public class ActorController {
         return CommonResult.success();
     }
 
+
+    @Limit(key = "limit3", permitsPerSecond = 2, timeout = 500, timeunit = TimeUnit.MILLISECONDS, msg = "系统繁忙，请稍后再试！")
     @ApiOperation(value = "获取演员信息")
     @GetMapping("/getActor")
     public CommonResult<?> getActorById(Long id) {
@@ -68,6 +72,7 @@ public class ActorController {
     }
 
 
+    @Limit(key = "limit3", permitsPerSecond = 2, timeout = 500, timeunit = TimeUnit.MILLISECONDS,msg = "系统繁忙，请稍后再试！")
     @ApiOperation("分页查询演员信息")
     @PostMapping("/list/page")
     public CommonResult<?> listActorByPage(@Validated @RequestBody ActorQueryRequest ActorQueryRequest) {
