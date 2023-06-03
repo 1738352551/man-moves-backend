@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenmanman.manmoviebackend.mapper.ManUserMapper">
+    <sql id="selectSql">
+        select
+            DISTINCT permission
+        from man_menu mm
+    </sql>
+    <select id="getUserAuthoritiesByUserId" resultType="String">
+        <include refid="selectSql"/>
+        where mm.id in (
+            select id from man_role_menu mrm where mrm.role_id in (
+                select id from man_user_role mur where mur.user_id = #{userId}
+            )
+        )
+    </select>
+</mapper>
