@@ -35,6 +35,6 @@ public class TesManUserMapper {
     private PasswordEncoder passwordEncoder;
     @Test
     public void generateAPassword() {
-        log.info(passwordEncoder.encode("123123"));
+        log.info(passwordEncoder.encode("4297f44b13955235245b2497399d7a93"));
     }
 }

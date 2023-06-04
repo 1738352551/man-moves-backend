@@ -2,8 +2,10 @@ package cn.chenmanman.manmoviebackend.service;
 
 import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
-import cn.chenmanman.manmoviebackend.mapper.ManRoleMapper;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.UserInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Map;
 
 /**
  * @author 陈慢慢
@@ -20,4 +22,8 @@ public interface ManUserService extends IService<ManUserEntity> {
      * @description 用户登录
      * */
     String login(UserLoginRequest userLoginRequest);
+
+    UserInfoVO info();
+
+    void logout();
 }

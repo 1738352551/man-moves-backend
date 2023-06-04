@@ -1,5 +1,6 @@
 package cn.chenmanman.manmoviebackend.mapper;
 
+import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -17,4 +18,7 @@ import java.util.List;
 public interface ManUserMapper extends BaseMapper<ManUserEntity> {
 
     List<String> getUserAuthoritiesByUserId(Long userId);
+
+
+    List<ManRoleEntity> getUserHaveRoleByUserId(Long userId);
 }

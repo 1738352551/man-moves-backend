@@ -13,10 +13,10 @@ import lombok.EqualsAndHashCode;
  *
  * @TableName man_role_menu
  */
-@EqualsAndHashCode(callSuper = true)
+
 @TableName(value ="man_role_menu")
 @Data
-public class ManRoleMenuEntity extends BaseEntity implements Serializable {
+public class ManRoleMenuEntity implements Serializable {
     /**
      * 主键Id
      */

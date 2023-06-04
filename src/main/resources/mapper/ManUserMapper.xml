@@ -11,9 +11,14 @@
     <select id="getUserAuthoritiesByUserId" resultType="String">
         <include refid="selectSql"/>
         where mm.id in (
-            select id from man_role_menu mrm where mrm.role_id in (
-                select id from man_user_role mur where mur.user_id = #{userId}
+            select menu_id from man_role_menu mrm where mrm.role_id in (
+                select role_id from man_user_role mur where mur.user_id = #{userId}
             )
         )
+    </select>
+    <select id="getUserHaveRoleByUserId"
+            resultType="manRoleEntity">
+        select id, name, role_key, status, create_time, create_by, update_time, update_by, is_delete from man_role
+        where id in (select role_id from man_user_role where user_id = #{userId});
     </select>
 </mapper>

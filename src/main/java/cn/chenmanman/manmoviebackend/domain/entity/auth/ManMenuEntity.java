@@ -1,6 +1,7 @@
 package cn.chenmanman.manmoviebackend.domain.entity.auth;
 
 import cn.chenmanman.manmoviebackend.domain.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +15,7 @@ import lombok.EqualsAndHashCode;
  * @date 2023/6/3 20:36
  */
 @Data
+@TableName("man_menu")
 @EqualsAndHashCode(callSuper = true)
 public class ManMenuEntity extends BaseEntity {
     /**

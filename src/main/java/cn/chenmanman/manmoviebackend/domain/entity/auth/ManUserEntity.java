@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,18 +31,57 @@ import java.util.stream.Collectors;
 @JsonIgnoreProperties({"authorities"})
 @TableName("man_user")
 public class ManUserEntity extends BaseEntity implements UserDetails {
+    /**
+     * 用户名
+     * */
     private String username;
 
+    /**
+     * 密码
+     * */
     private String password;
 
+    /**
+     * 邮箱
+     * */
     private String email;
 
 
+    /**
+     * 头像
+     * */
     private String avatar;
+    /**
+     *
+     * 昵称
+     * */
     private String nickname;
+
+    /**
+     * 性别
+     * */
     private Integer gender;
 
+    /**
+     * 用户状态
+     * */
     private Integer status;
+
+    /**
+     * 登录状态
+     * */
+    private Integer loginStatus;
+
+
+    /**
+     * 上次登录ip
+     * */
+    private String lastLoginIp;
+
+    /**
+     * 上次登录时间
+     * */
+    private Date lastLoginDate;
 
     @TableField(exist = false)
     @JsonIgnore
