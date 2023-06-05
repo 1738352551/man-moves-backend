@@ -34,6 +34,17 @@ public class ManMenuEntity extends BaseEntity {
     private String path;
 
     /**
+     * 菜单标识
+     * */
+    private String menuKey;
+
+    /**
+     * 重定向地址
+     * */
+    private String redirect;
+
+
+    /**
      * 组件地址
      * */
     private String component;

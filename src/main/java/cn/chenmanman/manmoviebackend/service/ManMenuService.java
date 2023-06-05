@@ -1,9 +1,11 @@
 package cn.chenmanman.manmoviebackend.service;
 
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
-import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieActorEntity;
-import cn.chenmanman.manmoviebackend.mapper.ManMenuMapper;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterTreeVO;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * @author 陈慢慢
@@ -15,4 +17,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @date 2023/6/3 21:28
  */
 public interface ManMenuService extends IService<ManMenuEntity> {
+
+    List<RouterTreeVO> getAntDesignRoutesTree();
+
+    List<RouterVO> getAntDesignRoutesArr();
 }
