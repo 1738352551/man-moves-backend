@@ -33,4 +33,6 @@ public class ManRoleEntity extends BaseEntity {
          *  角色状态(0:禁止, 1: 正常)
          * */
         private Integer status;
+
+        private Integer orderBy;
 }

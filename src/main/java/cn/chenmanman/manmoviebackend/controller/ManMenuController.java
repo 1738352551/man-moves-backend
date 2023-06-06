@@ -45,4 +45,8 @@ public class ManMenuController {
         return CommonResult.success(antDesignRoutes);
     }
 
+    @GetMapping("/treeList")
+    public CommonResult<?> getMenuTreeList() {
+        return CommonResult.success(manMenuService.getMenuTreeList());
+    }
 }

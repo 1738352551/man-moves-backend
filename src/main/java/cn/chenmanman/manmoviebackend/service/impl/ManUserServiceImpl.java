@@ -2,13 +2,11 @@ package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
 import cn.chenmanman.manmoviebackend.common.utils.RedisUtil;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
-import cn.chenmanman.manmoviebackend.domain.entity.BaseEntity;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.*;
-import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.ActionEntityVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.PermissionVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleInfoVO;
@@ -16,10 +14,8 @@ import cn.chenmanman.manmoviebackend.domain.vo.auth.UserInfoVO;
 import cn.chenmanman.manmoviebackend.mapper.*;
 import cn.chenmanman.manmoviebackend.service.ManUserService;
 import cn.chenmanman.manmoviebackend.common.utils.TokenUtil;
-import cn.hutool.core.lang.Opt;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
@@ -36,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author 陈慢慢

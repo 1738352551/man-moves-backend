@@ -1,6 +1,7 @@
 package cn.chenmanman.manmoviebackend.service;
 
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,4 +22,6 @@ public interface ManMenuService extends IService<ManMenuEntity> {
     List<RouterTreeVO> getAntDesignRoutesTree();
 
     List<RouterVO> getAntDesignRoutesArr();
+
+    List<MenuTreeVO> getMenuTreeList();
 }

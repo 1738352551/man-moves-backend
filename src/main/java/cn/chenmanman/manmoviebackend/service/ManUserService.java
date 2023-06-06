@@ -1,16 +1,15 @@
 package cn.chenmanman.manmoviebackend.service;
 
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 陈慢慢

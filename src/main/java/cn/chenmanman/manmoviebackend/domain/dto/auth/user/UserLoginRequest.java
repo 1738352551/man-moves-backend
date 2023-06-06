@@ -1,4 +1,4 @@
-package cn.chenmanman.manmoviebackend.domain.dto.auth;
+package cn.chenmanman.manmoviebackend.domain.dto.auth.user;
 
 import lombok.Data;
 

@@ -2,13 +2,11 @@ package cn.chenmanman.manmoviebackend.controller;
 
 import cn.chenmanman.manmoviebackend.common.CommonResult;
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
-import cn.chenmanman.manmoviebackend.domain.dto.movie.episodes.EpisodesQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
-import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.UserTableVO;
 import cn.chenmanman.manmoviebackend.service.ManUserService;
 import cn.hutool.core.map.MapUtil;
@@ -58,7 +56,7 @@ public class UserController {
     }
 
 
-    @ApiOperation("分页查询影视剧集")
+    @ApiOperation("分页查询用户")
     @PostMapping("/list/page")
     public CommonResult<?> listUserByPage(@Validated @RequestBody UserQueryRequest userQueryRequest) {
         long current = userQueryRequest.getCurrent();
