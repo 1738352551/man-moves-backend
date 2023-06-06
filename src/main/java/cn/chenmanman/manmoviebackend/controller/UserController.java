@@ -1,13 +1,27 @@
 package cn.chenmanman.manmoviebackend.controller;
 
 import cn.chenmanman.manmoviebackend.common.CommonResult;
+import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.movie.episodes.EpisodesQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.UserTableVO;
 import cn.chenmanman.manmoviebackend.service.ManUserService;
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author 陈慢慢
@@ -41,5 +55,53 @@ public class UserController {
     public CommonResult<?> logout() {
         manUserService.logout();
         return CommonResult.success("登出成功!");
+    }
+
+
+    @ApiOperation("分页查询影视剧集")
+    @PostMapping("/list/page")
+    public CommonResult<?> listUserByPage(@Validated @RequestBody UserQueryRequest userQueryRequest) {
+        long current = userQueryRequest.getCurrent();
+        long size = userQueryRequest.getPageSize();
+        // 构造查询条件
+        Page<ManUserEntity> manUserPage = manUserService.page(new Page<>(current, size), manUserService.getQueryWrapper(userQueryRequest));
+        List<UserTableVO> userTableVOList = manUserPage.getRecords().stream().map(manUserEntity -> {
+            UserTableVO userTableVO = new UserTableVO();
+            BeanUtils.copyProperties(manUserEntity, userTableVO);
+            return userTableVO;
+        }).collect(Collectors.toList());
+        return CommonResult.success(userTableVOList);
+    }
+
+
+    @PostMapping("/add")
+    public CommonResult<?> addUser(@Validated @RequestBody UserAddRequest userAddRequest) {
+        Optional.ofNullable(userAddRequest).orElseThrow(() -> new BusinessException("请求参数不能为空!", 500L));
+        manUserService.addUser(userAddRequest);
+        return CommonResult.success("添加用户成功!");
+    }
+
+    @PostMapping("/update")
+    public CommonResult<?> updateUser(@Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+        Optional.ofNullable(userUpdateRequest).orElseThrow(() -> new BusinessException("请求参数不能为空!", 500L));
+        manUserService.updateUser(userUpdateRequest);
+        return CommonResult.success("修改用户成功!");
+    }
+
+    @GetMapping("/{id}")
+    public CommonResult<?> getUserById(@PathVariable Long id) {
+        Optional.ofNullable(id).orElseThrow(() -> new BusinessException("id不能为空!", 500L));
+        ManUserEntity user = manUserService.getById(id);
+        UserTableVO userTableVO = new UserTableVO();
+        BeanUtils.copyProperties(user, userTableVO);
+        return CommonResult.success(userTableVO);
+    }
+
+    @PostMapping("/delete")
+    public CommonResult<?> deleteUser(@RequestBody List<Long> ids) {
+        Optional.ofNullable(ids).orElseThrow(() -> new BusinessException("请求参数不能为空!", 500L));
+        if (ids.isEmpty()) { throw new BusinessException("至少有一个id!", 500L); }
+        manUserService.removeUserByIds(ids);
+        return CommonResult.success();
     }
 }

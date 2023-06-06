@@ -21,7 +21,7 @@ public class BaseEntity {
     /**
      * 主键id
      * */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 创建时间

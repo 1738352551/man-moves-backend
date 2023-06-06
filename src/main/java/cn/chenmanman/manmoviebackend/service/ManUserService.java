@@ -1,10 +1,15 @@
 package cn.chenmanman.manmoviebackend.service;
 
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.UserInfoVO;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,7 +18,7 @@ import java.util.Map;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.service
  * @className ManUserService
- * @description TODO
+ * @description 用户服务
  * @date 2023/6/3 21:27
  */
 public interface ManUserService extends IService<ManUserEntity> {
@@ -26,4 +31,15 @@ public interface ManUserService extends IService<ManUserEntity> {
     UserInfoVO info();
 
     void logout();
+
+    /**
+     * 查询条件
+     * */
+    LambdaQueryWrapper<ManUserEntity> getQueryWrapper(UserQueryRequest userQueryRequest);
+
+    void addUser(UserAddRequest userAddRequest);
+
+    void updateUser(UserUpdateRequest userUpdateRequest);
+
+    void removeUserByIds(List<Long> ids);
 }

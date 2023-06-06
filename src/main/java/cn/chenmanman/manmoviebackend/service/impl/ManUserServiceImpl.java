@@ -2,9 +2,13 @@ package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
 import cn.chenmanman.manmoviebackend.common.utils.RedisUtil;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.UserLoginRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.BaseEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.*;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.ActionEntityVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.PermissionVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleInfoVO;
@@ -17,6 +21,7 @@ import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -38,9 +44,9 @@ import java.util.stream.Stream;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.service.impl
  * @className ManUserServiceImpl
- * @description TODO
+ * @description 实现UserDetailsService接口, 用户服务
  * @date 2023/6/3 21:28
- *  这里需要实现UserDetailsService接口
+ *
  */
 @Service
 public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity> implements ManUserService, UserDetailsService {
@@ -152,10 +158,92 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
     }
 
     /**
+     * 查询条件
+     *
+     * @param userQueryRequest 用户查询请求体
+     */
+    @Override
+    public LambdaQueryWrapper<ManUserEntity> getQueryWrapper(UserQueryRequest userQueryRequest) {
+        // 检查查询条件是否为null
+        Optional.ofNullable(userQueryRequest).orElseThrow(() -> new BusinessException("请求参数不能为空", 500L));
+        return new LambdaQueryWrapper<ManUserEntity>()
+                .eq(Objects.nonNull(userQueryRequest.getGender()), ManUserEntity::getGender, userQueryRequest.getGender())
+                .eq(Objects.nonNull(userQueryRequest.getLoginStatus()), ManUserEntity::getLoginStatus, userQueryRequest.getLoginStatus())
+                .eq(Objects.nonNull(userQueryRequest.getStatus()), ManUserEntity::getStatus, userQueryRequest.getStatus())
+                .like(Strings.isNotBlank(userQueryRequest.getUsername()), ManUserEntity::getUsername, userQueryRequest.getUsername())
+                .like(Strings.isNotBlank(userQueryRequest.getEmail()), ManUserEntity::getEmail, userQueryRequest.getEmail())
+                .like(Strings.isNotBlank(userQueryRequest.getNickname()), ManUserEntity::getNickname, userQueryRequest.getNickname());
+    }
+
+    @Transactional
+    @Override
+    public void addUser(UserAddRequest userAddRequest) {
+        // 检查目标用户是否已经添加
+        ManUserEntity manUserEntity = this.baseMapper.selectOne(new LambdaQueryWrapper<ManUserEntity>().eq(ManUserEntity::getUsername, userAddRequest.getUsername()));
+        if (manUserEntity != null) {
+            throw new BusinessException("该用户已存在", 500L);
+        }
+        manUserEntity = new ManUserEntity();
+        BeanUtils.copyProperties(userAddRequest, manUserEntity);
+        this.baseMapper.insert(manUserEntity);
+        // 开始添加用户与角色的关联
+        List<Long> roles = userAddRequest.getRoles();
+        if(roles != null && roles.size() > 0) {
+            for (Long role : roles) {
+                ManUserRoleEntity manUserRoleEntity = new ManUserRoleEntity();
+                manUserRoleEntity.setUserId(manUserEntity.getId());
+                manUserRoleEntity.setRoleId(role);
+                manUserRoleMapper.insert(manUserRoleEntity);
+            }
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(UserUpdateRequest userUpdateRequest) {
+        ManUserEntity manUserEntity = this.baseMapper.selectOne(new LambdaQueryWrapper<ManUserEntity>().eq(ManUserEntity::getUsername, userUpdateRequest.getUsername()));
+        Optional.ofNullable(manUserEntity).orElseThrow(() -> new BusinessException("用户不存在", 500L));
+        BeanUtils.copyProperties(userUpdateRequest, manUserEntity);
+        this.baseMapper.updateById(manUserEntity);
+        // 修改用户关联
+        List<Long> roles = userUpdateRequest.getRoles();
+        // 删除在roles中没，但表里面有的role
+        manUserRoleMapper.delete(new LambdaQueryWrapper<ManUserRoleEntity>()
+                .eq(ManUserRoleEntity::getUserId, manUserEntity.getId())
+                .notIn(ManUserRoleEntity::getRoleId, roles));
+        // 在表中加入数据库没，但roles里面有的role
+        roles.forEach(role -> {
+            ManUserRoleEntity manUserRoleEntity = manUserRoleMapper.selectById(role);
+            if (Objects.isNull(manUserRoleEntity)) {
+                ManUserRoleEntity manUserRoleEntity1 = new ManUserRoleEntity();
+                manUserRoleEntity1.setUserId(manUserEntity.getId());
+                manUserRoleEntity1.setRoleId(role);
+                manUserRoleMapper.insert(manUserRoleEntity1);
+            }
+        });
+    }
+
+    /**
+     * 删除用户根据ids
+     * */
+    @Transactional
+    @Override
+    public void removeUserByIds(List<Long> ids) {
+        ids.forEach( userId -> {
+            ManUserEntity manUserEntity = this.baseMapper.selectById(userId);
+            Optional.ofNullable(manUserEntity).orElseThrow(() -> new BusinessException("用户不存在", 500L));
+            this.baseMapper.deleteById(userId);
+            // 删除用户与角色的关联
+            manUserRoleMapper.delete(new LambdaQueryWrapper<ManUserRoleEntity>()
+                   .eq(ManUserRoleEntity::getUserId, manUserEntity.getId()));
+        });
+    }
+
+    /**
      * 获取子节点
      *
      * @param id      父节点id
-     * @param menu 所有菜单列表
+     * @param menus 所有菜单列表
      * @return 每个根节点下，所有子菜单列表
      */
     public List<Map<String, Object>> getChild(String id, List<ManMenuEntity> menus) {

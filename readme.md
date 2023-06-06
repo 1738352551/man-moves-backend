@@ -35,3 +35,46 @@
 10. 影视评论管理
 11. 影视弹幕(暂定)
 12. 待添加...
+## 4、项目结构
+```text
+man-movies-backend
+├─sql 数据库sql文件
+├─src
+│  ├─main
+│  │  ├─java
+│  │  │  └─cn
+│  │  │      └─chenmanman
+│  │  │          └─manmoviebackend
+│  │  │              ├─aop aop类
+│  │  │              ├─common 通用工具
+│  │  │              │  ├─exception
+│  │  │              │  └─utils
+│  │  │              ├─config 配置类
+│  │  │              ├─controller 控制器
+│  │  │              ├─domain 实体
+│  │  │              │  ├─dto 传输对象
+│  │  │              │  ├─entity 数据库实体类
+│  │  │              │  ├─enums 枚举
+│  │  │              │  └─vo 响应类       
+│  │  │              ├─filters 过滤器
+│  │  │              ├─mapper
+│  │  │              ├─pageprocessor 爬虫
+│  │  │              │  ├─iqy
+│  │  │              │  └─tencent
+│  │  │              ├─service 服务
+│  │  │              │  └─impl    
+│  │  │              └─websocket  支撑视频一起看
+│  │  └─resources
+│  │      ├─js
+│  │      │  ├─iqy
+│  │      │  └─tencent
+│  │      └─mapper   
+│  └─test
+│      └─java
+│          └─cn
+│              └─chenmanman
+│                  └─manmoviebackend
+│                      ├─mapper
+│                      ├─pageprocessor   
+│                      └─service
+```
