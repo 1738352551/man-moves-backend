@@ -102,4 +102,10 @@ public class UserController {
         manUserService.removeUserByIds(ids);
         return CommonResult.success();
     }
+
+    @GetMapping("/role/{id}")
+    public CommonResult<?> getUserAsRole(@PathVariable Long id) {
+        Optional.ofNullable(id).orElseThrow(() -> new BusinessException("id不能为空!", 500L));
+        return CommonResult.success(manUserService.getUserAsRole(id));
+    }
 }

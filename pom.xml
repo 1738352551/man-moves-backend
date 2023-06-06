@@ -123,6 +123,10 @@
             <artifactId>guava</artifactId>
             <version>30.1-jre</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
 
     </dependencies>

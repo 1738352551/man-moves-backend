@@ -41,4 +41,6 @@ public interface ManUserService extends IService<ManUserEntity> {
     void updateUser(UserUpdateRequest userUpdateRequest);
 
     void removeUserByIds(List<Long> ids);
+
+    List<Long> getUserAsRole(Long id);
 }

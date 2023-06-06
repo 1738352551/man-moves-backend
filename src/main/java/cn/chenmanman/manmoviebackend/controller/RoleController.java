@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -58,31 +59,34 @@ public class RoleController {
     @ApiOperation("添加角色")
     @PostMapping("/add")
     public CommonResult<?> addRole(@Validated @RequestBody RoleAddRequest roleAddRequest) {
-        ManRoleEntity manRoleEntity = new ManRoleEntity();
-        BeanUtils.copyProperties(roleAddRequest, manRoleEntity);
-        roleService.save(manRoleEntity);
+        roleService.addRole(roleAddRequest);
         return CommonResult.success();
     }
 
     @ApiOperation("修改角色")
     @PostMapping("/update")
     public CommonResult<?> updateRole(@Validated @RequestBody RoleUpdateRequest roleUpdateRequest) {
-        ManRoleEntity roleEntity = roleService.getById(roleUpdateRequest.getId());
-        BeanUtils.copyProperties(roleUpdateRequest, roleEntity);
-        roleService.updateById(roleEntity);
+        roleService.updateRole(roleUpdateRequest);
         return CommonResult.success();
     }
 
-    @ApiOperation("添加角色")
+    @ApiOperation("删除角色")
     @PostMapping("/delete")
     public CommonResult<?> deleteRole(@RequestBody List<Long> ids) {
-        roleService.removeBatchByIds(ids);
+        roleService.deleteRole(ids);
         return CommonResult.success();
     }
 
     @ApiOperation("获取指定角色的信息")
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public CommonResult<?> getRole(@PathVariable Long id) {
         return CommonResult.success(roleService.getById(id));
+    }
+
+    @ApiOperation("获取指定角色可操作的菜单")
+    @GetMapping("/menu/{id}")
+    public CommonResult<?> getRoleActionableMenus(@PathVariable Long id) {
+        Optional.ofNullable(id).orElseThrow(() -> new RuntimeException("角色id不能为空"));
+        return CommonResult.success(roleService.getRoleActionableMenus(id));
     }
 }

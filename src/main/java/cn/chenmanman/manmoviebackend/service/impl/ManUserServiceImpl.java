@@ -234,6 +234,13 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
         });
     }
 
+    @Override
+    public List<Long> getUserAsRole(Long id) {
+        return manUserRoleMapper.selectList(new LambdaQueryWrapper<ManUserRoleEntity>()
+                .eq(ManUserRoleEntity::getUserId, id))
+                .stream().map(ManUserRoleEntity::getRoleId).collect(Collectors.toList());
+    }
+
     /**
      * 获取子节点
      *

@@ -3,6 +3,7 @@ package cn.chenmanman.manmoviebackend.domain.dto.auth.role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @author 陈慢慢
@@ -22,4 +23,5 @@ public class RoleAddRequest {
 
     private String status;
     private Integer orderBy;
+    private List<Long> menus;
 }
