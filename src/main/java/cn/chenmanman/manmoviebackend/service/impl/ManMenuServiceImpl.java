@@ -1,18 +1,28 @@
 package cn.chenmanman.manmoviebackend.service.impl;
 
+import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.MetaVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterVO;
 import cn.chenmanman.manmoviebackend.mapper.ManMenuMapper;
+import cn.chenmanman.manmoviebackend.mapper.ManRoleMenuMapper;
 import cn.chenmanman.manmoviebackend.service.ManMenuService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -26,7 +36,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ManMenuServiceImpl  extends ServiceImpl<ManMenuMapper, ManMenuEntity> implements ManMenuService {
-
+    @Resource
+    private ManRoleMenuMapper manRoleMenuMapper;
 
 
     @Override
@@ -97,6 +108,32 @@ public class ManMenuServiceImpl  extends ServiceImpl<ManMenuMapper, ManMenuEntit
         }
 
         return rootMenus;
+    }
+
+    @Override
+    public LambdaQueryWrapper<ManMenuEntity> getQueryWrapper(MenuQueryRequest menuQueryRequest) {
+        Optional.ofNullable(menuQueryRequest).orElseThrow(() -> new BusinessException("参数不能为空", 500L));
+        return new LambdaQueryWrapper<ManMenuEntity>()
+                .like(Strings.isNotBlank(menuQueryRequest.getTitle()), ManMenuEntity::getTitle, menuQueryRequest.getTitle())
+                .eq(Objects.nonNull(menuQueryRequest.getMenuStatus()), ManMenuEntity::getStatus, menuQueryRequest.getMenuStatus());
+    }
+
+    @Transactional
+    @Override
+    public void deleteMenu(List<Long> ids) {
+        if (ids==null && ids.size() == 0) {
+            throw new BusinessException("参数不能为空", 500L);
+        }
+        for (Long id : ids) {
+            ManMenuEntity manMenuEntity = this.baseMapper.selectById(id);
+            if (manMenuEntity == null) {
+                continue;
+            }
+            // 1. 删除与角色的关联
+            manRoleMenuMapper.delete(new LambdaQueryWrapper<ManRoleMenuEntity>().eq(ManRoleMenuEntity::getMenuId, id));
+            // 2. 删除菜单
+            this.removeById(id);
+        }
     }
 
     private List<MenuTreeVO> getMenuTreeChildren(Long id, List<ManMenuEntity> allMenu) {

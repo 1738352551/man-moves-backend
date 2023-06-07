@@ -57,7 +57,7 @@ public class ManMenuEntity extends BaseEntity {
     /**
      * 顺序
      * */
-    private Integer sort;
+    private Integer orderBy;
 
     /**
      * 菜单类型(0:目录, 1:菜单, 2:按钮)

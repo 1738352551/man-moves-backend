@@ -1,9 +1,13 @@
 package cn.chenmanman.manmoviebackend.service;
 
+import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuAddRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterTreeVO;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterVO;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -24,4 +28,8 @@ public interface ManMenuService extends IService<ManMenuEntity> {
     List<RouterVO> getAntDesignRoutesArr();
 
     List<MenuTreeVO> getMenuTreeList();
+
+    LambdaQueryWrapper<ManMenuEntity> getQueryWrapper(MenuQueryRequest menuQueryRequest);
+
+    void deleteMenu(List<Long> ids);
 }
