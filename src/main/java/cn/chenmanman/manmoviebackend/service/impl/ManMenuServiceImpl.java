@@ -2,6 +2,7 @@ package cn.chenmanman.manmoviebackend.service.impl;
 
 import cn.chenmanman.manmoviebackend.common.exception.BusinessException;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuQueryRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.BaseEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTreeVO;
@@ -125,6 +126,8 @@ public class ManMenuServiceImpl  extends ServiceImpl<ManMenuMapper, ManMenuEntit
             throw new BusinessException("参数不能为空", 500L);
         }
         for (Long id : ids) {
+            Long ChildCount = this.baseMapper.selectCount(new LambdaQueryWrapper<ManMenuEntity>().eq(ManMenuEntity::getParentId, id));
+            if (ChildCount>0) { throw new BusinessException(String.format("%d, 还有子菜单, 无法删除!", id), 500L);}
             ManMenuEntity manMenuEntity = this.baseMapper.selectById(id);
             if (manMenuEntity == null) {
                 continue;
@@ -136,7 +139,16 @@ public class ManMenuServiceImpl  extends ServiceImpl<ManMenuMapper, ManMenuEntit
         }
     }
 
-    private List<MenuTreeVO> getMenuTreeChildren(Long id, List<ManMenuEntity> allMenu) {
+    @Override
+    public MenuTreeVO getMenu(Long id) {
+        ManMenuEntity manMenuEntity = this.baseMapper.selectById(id);
+        MenuTreeVO menuTreeVO = new MenuTreeVO();
+        BeanUtils.copyProperties(manMenuEntity, menuTreeVO);
+        menuTreeVO.setChildren(getMenuTreeChildren(menuTreeVO.getId(), this.baseMapper.selectList(null)));
+        return menuTreeVO;
+    }
+
+    public List<MenuTreeVO> getMenuTreeChildren(Long id, List<ManMenuEntity> allMenu) {
         List<MenuTreeVO> childList = new ArrayList<>();
         for (ManMenuEntity entity : allMenu) {
             // 遍历所有节点，将所有菜单的父id与传过来的根节点的id比较

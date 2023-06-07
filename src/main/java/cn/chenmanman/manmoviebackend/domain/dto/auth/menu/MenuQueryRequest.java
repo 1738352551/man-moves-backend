@@ -14,8 +14,7 @@ import lombok.EqualsAndHashCode;
  * @date 2023/6/7 11:11
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class MenuQueryRequest extends PageRequest {
+public class MenuQueryRequest {
     private String title;
     private Integer MenuStatus;
 }

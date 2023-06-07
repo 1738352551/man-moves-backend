@@ -1,6 +1,7 @@
 package cn.chenmanman.manmoviebackend.domain.vo.auth;
 
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,5 +19,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MenuTreeVO extends ManMenuEntity {
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<MenuTreeVO> children;
 }

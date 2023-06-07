@@ -32,4 +32,8 @@ public interface ManMenuService extends IService<ManMenuEntity> {
     LambdaQueryWrapper<ManMenuEntity> getQueryWrapper(MenuQueryRequest menuQueryRequest);
 
     void deleteMenu(List<Long> ids);
+
+    MenuTreeVO getMenu(Long id);
+
+    public List<MenuTreeVO> getMenuTreeChildren(Long id, List<ManMenuEntity> allMenu);
 }

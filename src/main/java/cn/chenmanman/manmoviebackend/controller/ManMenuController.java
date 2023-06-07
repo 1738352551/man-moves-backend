@@ -8,10 +8,7 @@ import cn.chenmanman.manmoviebackend.domain.dto.auth.menu.MenuUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.role.RoleQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleEntity;
-import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTableVO;
-import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleTableVO;
-import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterTreeVO;
-import cn.chenmanman.manmoviebackend.domain.vo.auth.RouterVO;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.*;
 import cn.chenmanman.manmoviebackend.service.ManMenuService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -21,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,18 +62,27 @@ public class ManMenuController {
 
 
     @ApiOperation("分页查询菜单")
-    @PostMapping("/list/page")
+    @PostMapping("/list")
     public CommonResult<?> listMenuByPage(@Validated @RequestBody MenuQueryRequest menuQueryRequest) {
-        long current = menuQueryRequest.getCurrent();
-        long size = menuQueryRequest.getPageSize();
-        // 构造查询条件
-        Page<ManMenuEntity> manMenuPage = manMenuService.page(new Page<>(current, size), manMenuService.getQueryWrapper(menuQueryRequest));
-        List<MenuTableVO> menuTableVOList = manMenuPage.getRecords().stream().map(manMenuEntity -> {
-            MenuTableVO menuTableVO = new MenuTableVO();
-            BeanUtils.copyProperties(manMenuEntity, menuTableVO);
-            return menuTableVO;
-        }).collect(Collectors.toList());
-        return CommonResult.success(menuTableVOList);
+        // 所有菜单
+        List<ManMenuEntity> manMenuEntities = manMenuService.getBaseMapper().selectList(this.manMenuService.getQueryWrapper(menuQueryRequest));
+
+        // 所有父级菜单
+        List<MenuTreeVO> rootMenus = new ArrayList<>();
+        for (ManMenuEntity manMenuEntity : manMenuEntities) {
+            if (manMenuEntity.getParentId().equals(0L)) {
+                MenuTreeVO menuTreeVO = new MenuTreeVO();
+                BeanUtils.copyProperties(manMenuEntity, menuTreeVO);
+                rootMenus.add(menuTreeVO);
+            }
+        }
+
+        // 寻找父级菜单的子菜单
+        for (MenuTreeVO rootMenu : rootMenus) {
+            rootMenu.setChildren(manMenuService.getMenuTreeChildren(rootMenu.getId(), manMenuEntities));
+        }
+
+        return CommonResult.success(rootMenus);
     }
 
     @PostMapping("/add")
@@ -99,5 +106,11 @@ public class ManMenuController {
     private CommonResult<?> deleteMenu(@RequestBody List<Long> ids) {
         manMenuService.deleteMenu(ids);
         return CommonResult.success();
+    }
+
+    @GetMapping("/{id}")
+    private CommonResult<?> getMenuById(@PathVariable Long id) {
+        MenuTreeVO menuTreeVO = manMenuService.getMenu(id);
+        return CommonResult.success(menuTreeVO);
     }
 }
