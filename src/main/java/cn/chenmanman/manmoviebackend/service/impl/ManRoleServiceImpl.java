@@ -7,10 +7,12 @@ import cn.chenmanman.manmoviebackend.domain.dto.auth.role.RoleUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManMenuEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleMenuEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserRoleEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.MenuTreeVO;
 import cn.chenmanman.manmoviebackend.mapper.ManMenuMapper;
 import cn.chenmanman.manmoviebackend.mapper.ManRoleMapper;
 import cn.chenmanman.manmoviebackend.mapper.ManRoleMenuMapper;
+import cn.chenmanman.manmoviebackend.mapper.ManUserRoleMapper;
 import cn.chenmanman.manmoviebackend.service.ManRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -41,6 +43,8 @@ public class ManRoleServiceImpl extends ServiceImpl<ManRoleMapper, ManRoleEntity
 
     @Resource
     private ManRoleMenuMapper manRoleMenuMapper;
+    @Resource
+    private ManUserRoleMapper manUserRoleMapper;
 
     @Resource
     private ManMenuMapper manMenuMapper;
@@ -126,6 +130,9 @@ public class ManRoleServiceImpl extends ServiceImpl<ManRoleMapper, ManRoleEntity
             // 删除角色与菜单间的关联
             manRoleMenuMapper.delete(new LambdaQueryWrapper<ManRoleMenuEntity>()
                     .eq(ManRoleMenuEntity::getRoleId, manRoleEntity.getId()));
+            // 删除角色与用户间的关联
+            manUserRoleMapper.delete(new LambdaQueryWrapper<ManUserRoleEntity>()
+                   .eq(ManUserRoleEntity::getRoleId, manRoleEntity.getId()));
             this.baseMapper.deleteById(id);
         }
     }

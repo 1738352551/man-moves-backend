@@ -97,9 +97,8 @@ public class UserController {
 
     @PostMapping("/delete")
     public CommonResult<?> deleteUser(@RequestBody List<Long> ids) {
-        Optional.ofNullable(ids).orElseThrow(() -> new BusinessException("请求参数不能为空!", 500L));
-        if (ids.isEmpty()) { throw new BusinessException("至少有一个id!", 500L); }
-        manUserService.removeUserByIds(ids);
+//        Optional.ofNullable(ids).orElseThrow(() -> new BusinessException("请求参数不能为空!", 500L));
+        manUserService.deleteUser(ids);
         return CommonResult.success();
     }
 

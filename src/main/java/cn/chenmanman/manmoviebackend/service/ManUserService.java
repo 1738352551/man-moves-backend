@@ -43,4 +43,6 @@ public interface ManUserService extends IService<ManUserEntity> {
     void removeUserByIds(List<Long> ids);
 
     List<Long> getUserAsRole(Long id);
+
+    void deleteUser(List<Long> ids);
 }

@@ -241,6 +241,23 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
                 .stream().map(ManUserRoleEntity::getRoleId).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
+    public void deleteUser(List<Long> ids) {
+        if (ids==null&&ids.isEmpty()) { throw new BusinessException("至少有一个id!", 500L); }
+        for (Long id : ids) {
+            ManUserEntity manUserEntity = this.baseMapper.selectById(id);
+            if (manUserEntity == null) {
+                continue;
+            }
+            // 1.删除用户与角色的关联信息
+            manUserRoleMapper.delete(new LambdaQueryWrapper<ManUserRoleEntity>()
+                  .eq(ManUserRoleEntity::getUserId, manUserEntity.getId()));
+            // 2.删除用户
+            this.baseMapper.deleteById(id);
+        }
+    }
+
     /**
      * 获取子节点
      *
