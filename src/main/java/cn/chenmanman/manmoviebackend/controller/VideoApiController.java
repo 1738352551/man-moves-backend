@@ -6,6 +6,8 @@ import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiAddPostReque
 import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.video.VideoApiUpdatePutRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.VideoApiEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleTableVO;
 import cn.chenmanman.manmoviebackend.service.VideoApiService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -69,10 +71,16 @@ public class VideoApiController {
 
     @ApiOperation("分页查询")
     @PostMapping("/list/page")
-    public CommonResult<Page<VideoApiEntity>> listVideoByPage(VideoApiQueryRequest videoApiQueryRequest){
+    public CommonResult<PageResult<VideoApiEntity>> listVideoByPage(VideoApiQueryRequest videoApiQueryRequest){
         long current = videoApiQueryRequest.getCurrent();
         long size = videoApiQueryRequest.getPageSize();
         Page<VideoApiEntity> videoApiPage = videoApiService.page(new Page<>(current, size));
-        return CommonResult.success(videoApiPage);
+        PageResult<VideoApiEntity> pageResult = new PageResult<>();
+        pageResult.setList(videoApiPage.getRecords());
+        pageResult.setTotal(videoApiPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(videoApiPage.getSize());
+        pageResult.setPages(videoApiPage.getPages());
+        return CommonResult.success(pageResult);
     }
 }

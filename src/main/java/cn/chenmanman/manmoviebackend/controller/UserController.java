@@ -7,6 +7,7 @@ import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserLoginRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.user.UserUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManUserEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.UserTableVO;
 import cn.chenmanman.manmoviebackend.service.ManUserService;
 import cn.hutool.core.map.MapUtil;
@@ -68,7 +69,13 @@ public class UserController {
             BeanUtils.copyProperties(manUserEntity, userTableVO);
             return userTableVO;
         }).collect(Collectors.toList());
-        return CommonResult.success(userTableVOList);
+        PageResult<UserTableVO> pageResult = new PageResult<>();
+        pageResult.setList(userTableVOList);
+        pageResult.setTotal(manUserPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(manUserPage.getSize());
+        pageResult.setPages(manUserPage.getPages());
+        return CommonResult.success(pageResult);
     }
 
 

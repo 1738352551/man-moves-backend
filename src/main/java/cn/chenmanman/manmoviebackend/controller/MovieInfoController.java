@@ -6,7 +6,9 @@ import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
 import cn.chenmanman.manmoviebackend.service.MovieInfoService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -83,12 +85,18 @@ public class MovieInfoController {
     }
 
     @ApiOperation(value = "分页查询影视信息")
-    @GetMapping("/list/page")
-    public CommonResult<?> listMovieInfoByPage(MovieInfoQueryRequest movieInfoQueryRequest) {
+    @PostMapping("/list/page")
+    public CommonResult<?> listMovieInfoByPage(@Validated @RequestBody MovieInfoQueryRequest movieInfoQueryRequest) {
         long current = movieInfoQueryRequest.getCurrent();
         long size = movieInfoQueryRequest.getPageSize();
         Page<MovieInfoEntity> movieInfoPage = movieInfoService.page(new Page<>(current, size));
-        return CommonResult.success(movieInfoPage);
+        PageResult<MovieInfoEntity> pageResult = new PageResult<>();
+        pageResult.setList(movieInfoPage.getRecords());
+        pageResult.setTotal(movieInfoPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(movieInfoPage.getSize());
+        pageResult.setPages(movieInfoPage.getPages());
+        return CommonResult.success(pageResult);
     }
 
 

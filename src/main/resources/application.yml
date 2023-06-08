@@ -7,6 +7,9 @@ mybatis-plus:
   type-aliases-package: cn.chenmanman.manmoviebackend.domain.entity
   configuration:
     map-underscore-to-camel-case: true # 下划线转驼峰
+  global-config:
+    db-config:
+      id-type: auto
 spring:
   # mysql数据源配置
   datasource:

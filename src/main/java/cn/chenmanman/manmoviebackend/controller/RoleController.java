@@ -5,6 +5,8 @@ import cn.chenmanman.manmoviebackend.domain.dto.auth.role.RoleAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.role.RoleQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.auth.role.RoleUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.auth.ManRoleEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
 import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleTableVO;
 import cn.chenmanman.manmoviebackend.service.ManRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -53,7 +55,14 @@ public class RoleController {
             BeanUtils.copyProperties(manRoleEntity, roleTableVO);
             return roleTableVO;
         }).collect(Collectors.toList());
-        return CommonResult.success(roleTableVOList);
+
+        PageResult<RoleTableVO> pageResult = new PageResult<>();
+        pageResult.setList(roleTableVOList);
+        pageResult.setTotal(manRolePage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(manRolePage.getSize());
+        pageResult.setPages(manRolePage.getPages());
+        return CommonResult.success(pageResult);
     }
 
     @ApiOperation("添加角色")

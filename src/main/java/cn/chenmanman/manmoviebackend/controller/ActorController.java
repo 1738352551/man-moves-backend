@@ -6,6 +6,8 @@ import cn.chenmanman.manmoviebackend.domain.dto.movie.actor.ActorAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.actor.ActorQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.actor.ActorUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.ActorEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.UserTableVO;
 import cn.chenmanman.manmoviebackend.service.ActorService;
 import cn.chenmanman.manmoviebackend.service.impl.ActorServiceImpl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -80,6 +82,12 @@ public class ActorController {
         long size = ActorQueryRequest.getPageSize();
         // 构造查询条件
         Page<ActorEntity> movieInfoPage = actorService.page(new Page<>(current, size), actorService.getQueryWrapper(ActorQueryRequest));
-        return CommonResult.success(movieInfoPage);
+        PageResult<ActorEntity> pageResult = new PageResult<>();
+        pageResult.setList(movieInfoPage.getRecords());
+        pageResult.setTotal(movieInfoPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(movieInfoPage.getSize());
+        pageResult.setPages(movieInfoPage.getPages());
+        return CommonResult.success(pageResult);
     }
 }

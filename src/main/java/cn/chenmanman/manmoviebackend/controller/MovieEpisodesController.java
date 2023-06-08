@@ -7,10 +7,13 @@ import cn.chenmanman.manmoviebackend.domain.dto.movie.episodes.EpisodesQueryRequ
 import cn.chenmanman.manmoviebackend.domain.dto.movie.episodes.EpisodesUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.ActorEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
 import cn.chenmanman.manmoviebackend.service.EpisodesService;
 import cn.chenmanman.manmoviebackend.service.impl.EpisodesServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,8 +83,14 @@ public class MovieEpisodesController {
         long current = episodesQueryRequest.getCurrent();
         long size = episodesQueryRequest.getPageSize();
         // 构造查询条件
-        Page<EpisodesEntity> movieInfoPage = episodesService.page(new Page<>(current, size), episodesService.getQueryWrapper(episodesQueryRequest));
-        return CommonResult.success(movieInfoPage);
+        Page<EpisodesEntity> movieEpisodesPage = episodesService.page(new Page<>(current, size), episodesService.getQueryWrapper(episodesQueryRequest));
+        PageResult<EpisodesEntity> pageResult = new PageResult<>();
+        pageResult.setList(movieEpisodesPage.getRecords());
+        pageResult.setTotal(movieEpisodesPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(movieEpisodesPage.getSize());
+        pageResult.setPages(movieEpisodesPage.getPages());
+        return CommonResult.success(pageResult);
     }
 
     @ApiOperation("分配影视剧集给影视")
@@ -95,5 +104,14 @@ public class MovieEpisodesController {
         }
         episodesService.assignEpisodesToMovie(movieId, episodesId);
         return CommonResult.success();
+    }
+
+    @ApiOperation("获取影视剧的剧集")
+    @GetMapping("/movie/{movieId}")
+    public CommonResult<?> getMovieForEpisodesById(@PathVariable Long movieId) {
+        if (movieId == null) {
+            return CommonResult.fail("movieId不能为空");
+        }
+        return CommonResult.success(episodesService.list(new LambdaQueryWrapper<EpisodesEntity>().eq(EpisodesEntity::getMovieId, movieId)));
     }
 }

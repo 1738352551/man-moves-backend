@@ -5,6 +5,8 @@ import cn.chenmanman.manmoviebackend.domain.dto.movie.tag.TagAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.tag.TagQueryRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.tag.TagUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.TagEntity;
+import cn.chenmanman.manmoviebackend.domain.vo.PageResult;
+import cn.chenmanman.manmoviebackend.domain.vo.auth.RoleTableVO;
 import cn.chenmanman.manmoviebackend.service.TagService;
 import cn.chenmanman.manmoviebackend.service.impl.TagServiceImpl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -75,6 +77,12 @@ public class TagController {
         long size = tagQueryRequest.getPageSize();
         // 构造查询条件
         Page<TagEntity> tagPage = tagService.page(new Page<>(current, size), tagService.getQueryWrapper(tagQueryRequest));
-        return CommonResult.success(tagPage);
+        PageResult<TagEntity> pageResult = new PageResult<>();
+        pageResult.setList(tagPage.getRecords());
+        pageResult.setTotal(tagPage.getTotal());
+        pageResult.setCurrent(current);
+        pageResult.setSize(tagPage.getSize());
+        pageResult.setPages(tagPage.getPages());
+        return CommonResult.success(pageResult);
     }
 }
