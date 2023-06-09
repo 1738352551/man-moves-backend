@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @projectName man-moves-backend
  * @package cn.chenmanman.manmoviebackend.domain.dto.episodes
  * @className EpisodesUpdateRequest
- * @description TODO
+ * @description 剧集修改请求
  * @date 2023/6/2 23:10
  */
 @Data
@@ -21,9 +21,6 @@ public class EpisodesUpdateRequest {
 
 
     private String movieUrl;
-
-    @NotNull(message = "剧集必须有对应的movieId")
-    private Long movieId;
 
     private Long id;
 }

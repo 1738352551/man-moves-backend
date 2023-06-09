@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,8 +138,12 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
     @Transactional
     public void removeMovieInfo_ext(Long movieId) {
         // 1. 删除相关联的信息
+        // 1.1 删除影视相关标签关联
         movieTagMapper.delete(new QueryWrapper<MovieTagEntity>().eq("movie_id", movieId));
+        // 1.2 删除影视想相关演职员关联
         movieActorMapper.delete(new QueryWrapper<MovieActorEntity>().eq("movie_id", movieId));
+        // 1.3 删除影视相关的epi
+        episodesMapper.delete(new LambdaQueryWrapper<EpisodesEntity>().eq(EpisodesEntity::getMovieId, movieId));
         // 2. 删除影视信息
         this.getBaseMapper().deleteById(movieId);
     }
@@ -223,11 +228,11 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
         // 将不存在于movieInfoUpdateRequest中list的标签删除
         movieTagMapper.delete(new LambdaQueryWrapper<MovieTagEntity>()
                 .eq(MovieTagEntity::getMovieId, movieInfo.getId())
-                .and(c->c.notIn(MovieTagEntity::getTagId, movieInfoUpdateRequest.getTagList())));
+                .and(c->c.notIn(!Collections.isEmpty(movieInfoUpdateRequest.getTagId()), MovieTagEntity::getTagId, movieInfoUpdateRequest.getTagId())));
         // 将不存在于movieInfoUpdateRequest中list的演职员删除
         movieActorMapper.delete(new LambdaQueryWrapper<MovieActorEntity>()
                 .eq(MovieActorEntity::getMovieId, movieInfo.getId())
-                .and(c->c.notIn(MovieActorEntity::getActorId, movieInfoUpdateRequest.getActorList())));
+                .and(c-> c.notIn(!Collections.isEmpty(movieInfoUpdateRequest.getActorList()), MovieActorEntity::getActorId, movieInfoUpdateRequest.getActorList().stream().map(MovieActorEntity::getActorId).collect(Collectors.toList()))));
     }
 
     /**
@@ -235,7 +240,7 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
      * */
     private void updateMovieInfo_ext_AddNotInTable(MovieInfoUpdateRequest movieInfoUpdateRequest, MovieInfoEntity movieInfo) {
         // 2.2 添加movieInfoUpdateRequest中不存在于表中的标签
-        movieInfoUpdateRequest.getTagList().forEach(tag -> {
+        movieInfoUpdateRequest.getTagId().forEach(tag -> {
             MovieTagEntity movieTagEntity = movieTagMapper.selectOne(new QueryWrapper<MovieTagEntity>()
                     .eq("movie_id", movieInfo.getId())
                     .and(c->c.eq("tag_id", tag)));

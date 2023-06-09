@@ -57,5 +57,5 @@ public class MovieInfoUpdateRequest {
     private List<MovieActorEntity> actorList;
 
     @ApiModelProperty(value = "影视关联的标签", required = false)
-    private List<Long> tagList;
+    private List<Long> tagId;
 }

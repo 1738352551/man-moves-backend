@@ -85,4 +85,10 @@ public class TagController {
         pageResult.setPages(tagPage.getPages());
         return CommonResult.success(pageResult);
     }
+
+    @ApiOperation("获取所有标签")
+    @GetMapping
+    public CommonResult<?> getTags(){
+        return CommonResult.success(tagService.list());
+    }
 }
