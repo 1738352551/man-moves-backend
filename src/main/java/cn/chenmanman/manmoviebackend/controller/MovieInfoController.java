@@ -84,6 +84,15 @@ public class MovieInfoController {
         return CommonResult.success(movieInfoService.getMovieInfoEpisodes(pageRequest, id));
     }
 
+    @ApiOperation(value = "获取影视对应的演职员")
+    @GetMapping("/getMovieInfoActorByMovieId")
+    public CommonResult<?> getMovieInfoActorByMovieId(Long id) {
+        if (id == null) {
+            return CommonResult.fail("id不能为空");
+        }
+        return CommonResult.success(movieInfoService.getMovieInfoActorByMovieId(id));
+    }
+
     @ApiOperation(value = "分页查询影视信息")
     @PostMapping("/list/page")
     public CommonResult<?> listMovieInfoByPage(@Validated @RequestBody MovieInfoQueryRequest movieInfoQueryRequest) {

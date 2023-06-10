@@ -4,6 +4,7 @@ import cn.chenmanman.manmoviebackend.domain.dto.common.PageRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoAddRequest;
 import cn.chenmanman.manmoviebackend.domain.dto.movie.movieinfo.MovieInfoUpdateRequest;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.EpisodesEntity;
+import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieActorEntity;
 import cn.chenmanman.manmoviebackend.domain.entity.movie.MovieInfoEntity;
 import cn.chenmanman.manmoviebackend.domain.vo.movie.MovieInfoVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -46,4 +47,6 @@ public interface MovieInfoService extends IService<MovieInfoEntity> {
      * @param movieInfoUpdateRequest 影视更新信息请求参数
      * */
     void updateMovieInfo(MovieInfoUpdateRequest movieInfoUpdateRequest);
+
+    List<MovieActorEntity> getMovieInfoActorByMovieId(Long id);
 }

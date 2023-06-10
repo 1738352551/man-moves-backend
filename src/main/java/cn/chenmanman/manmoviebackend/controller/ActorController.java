@@ -90,4 +90,10 @@ public class ActorController {
         pageResult.setPages(movieInfoPage.getPages());
         return CommonResult.success(pageResult);
     }
+
+    @ApiOperation(value = "获取所有演员")
+    @GetMapping("/all")
+    public CommonResult<?> getActorAll() {
+        return CommonResult.success(actorService.list());
+    }
 }

@@ -83,4 +83,8 @@ public class VideoApiController {
         pageResult.setPages(videoApiPage.getPages());
         return CommonResult.success(pageResult);
     }
+    @GetMapping("/getVideoApi")
+    public CommonResult<?> getVideoApiById(Long id) {
+        return CommonResult.success(videoApiService.getById(id));
+    }
 }

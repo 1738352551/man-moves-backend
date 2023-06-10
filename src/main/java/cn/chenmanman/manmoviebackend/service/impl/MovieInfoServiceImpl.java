@@ -220,6 +220,11 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
         proxy.updateMovieInfo_ext(movieInfoUpdateRequest, movieInfo);
     }
 
+    @Override
+    public List<MovieActorEntity> getMovieInfoActorByMovieId(Long id) {
+        return movieActorMapper.selectList(new QueryWrapper<MovieActorEntity>().eq("movie_id", id));
+    }
+
 
     /**
      * 修改影视信息扩展: 将不存在于movieInfoUpdateRequest中list的标签删除
@@ -232,7 +237,7 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
         // 将不存在于movieInfoUpdateRequest中list的演职员删除
         movieActorMapper.delete(new LambdaQueryWrapper<MovieActorEntity>()
                 .eq(MovieActorEntity::getMovieId, movieInfo.getId())
-                .and(c-> c.notIn(!Collections.isEmpty(movieInfoUpdateRequest.getActorList()), MovieActorEntity::getActorId, movieInfoUpdateRequest.getActorList().stream().map(MovieActorEntity::getActorId).collect(Collectors.toList()))));
+                .and(c-> c.notIn(!Collections.isEmpty(movieInfoUpdateRequest.getMovieActor()), MovieActorEntity::getActorId, movieInfoUpdateRequest.getMovieActor().stream().map(MovieActorEntity::getActorId).collect(Collectors.toList()))));
     }
 
     /**
@@ -256,7 +261,7 @@ public class MovieInfoServiceImpl extends ServiceImpl<MovieInfoMapper, MovieInfo
         });
 
         // 2.3 添加movieInfoUpdateRequest中不存在于表中的标签
-        movieInfoUpdateRequest.getActorList().forEach(actor -> {
+        movieInfoUpdateRequest.getMovieActor().forEach(actor -> {
             MovieActorEntity movieActorEntity = movieActorMapper.selectOne(new QueryWrapper<MovieActorEntity>()
                     .eq("movie_id", movieInfo.getId())
                     .and(c->c.eq("actor_id", actor.getActorId())));
