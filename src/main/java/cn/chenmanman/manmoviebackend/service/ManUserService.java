@@ -9,6 +9,7 @@ import cn.chenmanman.manmoviebackend.domain.vo.auth.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public interface ManUserService extends IService<ManUserEntity> {
     /**
      * @description 用户登录
      * */
-    String login(UserLoginRequest userLoginRequest);
+    String login(UserLoginRequest userLoginRequest, HttpServletRequest req);
 
     UserInfoVO info();
 

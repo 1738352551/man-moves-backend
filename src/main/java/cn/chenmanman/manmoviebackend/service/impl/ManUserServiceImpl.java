@@ -26,10 +26,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -86,7 +88,7 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
      * @description 用户登录
      */
     @Override
-    public String login(UserLoginRequest userLoginRequest) {
+    public String login(UserLoginRequest userLoginRequest, HttpServletRequest req) {
         // 前端md5加密了密码
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userLoginRequest.getUsername(), userLoginRequest.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
@@ -96,6 +98,10 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
         String userId = String.valueOf(principal.getId());
         String redisKey ="loginUser:" + userId;
         redisUtil.set(redisKey, principal);
+        principal.setLastLoginDate(new Date());
+        principal.setLastLoginIp(req.getLocalAddr());
+        principal.setLoginStatus(1);
+        this.baseMapper.updateById(principal);
         return TokenUtil.createJWT(userId);
     }
 
@@ -148,6 +154,9 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
         String redisKey = "loginUser:" + userId;
         // 删除redis中存储的用户信息
         redisUtil.del(redisKey);
+        // 设置登陆状态为离线
+        principal.setLoginStatus(0);
+        this.baseMapper.updateById(principal);
         // 清除SecurityContextHolder
         SecurityContextHolder.clearContext();
     }
@@ -180,6 +189,7 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
         }
         manUserEntity = new ManUserEntity();
         BeanUtils.copyProperties(userAddRequest, manUserEntity);
+        manUserEntity.setPassword(new BCryptPasswordEncoder().encode(userAddRequest.getPassword()));
         this.baseMapper.insert(manUserEntity);
         // 开始添加用户与角色的关联
         List<Long> roles = userAddRequest.getRoles();
@@ -199,6 +209,7 @@ public class ManUserServiceImpl extends ServiceImpl<ManUserMapper, ManUserEntity
         ManUserEntity manUserEntity = this.baseMapper.selectOne(new LambdaQueryWrapper<ManUserEntity>().eq(ManUserEntity::getUsername, userUpdateRequest.getUsername()));
         Optional.ofNullable(manUserEntity).orElseThrow(() -> new BusinessException("用户不存在", 500L));
         BeanUtils.copyProperties(userUpdateRequest, manUserEntity);
+        manUserEntity.setPassword(new BCryptPasswordEncoder().encode(userUpdateRequest.getPassword()));
         this.baseMapper.updateById(manUserEntity);
         // 修改用户关联
         List<Long> roles = userUpdateRequest.getRoles();

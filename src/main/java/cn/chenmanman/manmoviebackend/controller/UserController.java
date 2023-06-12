@@ -14,10 +14,12 @@ import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,8 +41,8 @@ public class UserController {
     private ManUserService manUserService;
 
     @PostMapping("/login")
-    public CommonResult<?> login(@Validated @RequestBody UserLoginRequest userLoginRequest) {
-        return CommonResult.success("登录成功!", MapUtil.builder().put("token", manUserService.login(userLoginRequest)).build());
+    public CommonResult<?> login(@Validated @RequestBody UserLoginRequest userLoginRequest, HttpServletRequest req) {
+        return CommonResult.success("登录成功!", MapUtil.builder().put("token", manUserService.login(userLoginRequest, req)).build());
     }
 
 

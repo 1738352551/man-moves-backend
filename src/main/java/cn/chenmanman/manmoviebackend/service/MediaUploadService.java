@@ -1,5 +1,8 @@
 package cn.chenmanman.manmoviebackend.service;
 
+import cn.chenmanman.manmoviebackend.domain.entity.Files;
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @author 陈慢慢
  * @version 1.0
@@ -11,4 +14,7 @@ package cn.chenmanman.manmoviebackend.service;
  */
 public interface MediaUploadService {
 
+    String uploadVideo(MultipartFile file);
+
+    Files uploadFile(MultipartFile file);
 }
